@@ -1,7 +1,9 @@
 export default function RaceCanvas() {
   return (
-    <section className="flex h-[500px] items-center justify-center rounded-xl border bg-gray-100">
-      Canvas 영역
-    </section>
+    <div className="flex h-[720px] items-center justify-center rounded-xl border bg-white shadow-sm">
+      <span className="text-xl font-medium text-slate-500">
+      Race Canvas
+      </span>
+    </div>
   );
 }

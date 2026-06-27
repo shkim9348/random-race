@@ -14,10 +14,18 @@ export default function ParticipantItem({
       <span>{participant.name}</span>
 
       <button
-        className="text-red-500"
+        className="
+          rounded-lg
+          p-2
+          text-red-500
+          transition
+
+          hover:bg-red-50
+          hover:text-red-600
+        "
         onClick={() => onRemove(participant.id)}
       >
-        ✕
+          ✕
       </button>
     </div>
   );
