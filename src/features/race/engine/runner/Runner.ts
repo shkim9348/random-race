@@ -1,25 +1,21 @@
-export class Runner {
+export interface Runner {
   id: string;
 
   name: string;
+
+  color: string;
 
   x: number;
 
   y: number;
 
-  color: string;
+  speed: number;
 
-  constructor(
-    id: string,
-    name: string,
-    x: number,
-    y: number,
-    color: string
-  ) {
-    this.id = id;
-    this.name = name;
-    this.x = x;
-    this.y = y;
-    this.color = color;
-  }
+  acceleration: number;
+
+  maxSpeed: number;
+
+  finished: boolean;
+
+  rank?: number;
 }

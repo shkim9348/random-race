@@ -45,6 +45,18 @@ export class CanvasEngine {
   }
 
   /**
+   * 참가자 설정
+   */
+  public setParticipants(
+    participants: {
+      id: string;
+      name: string;
+    }[]
+  ) {
+    this.runnerManager.setParticipants(participants);
+  }
+
+  /**
    * 게임 시작
    */
   start() {
