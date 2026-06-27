@@ -1,32 +1,34 @@
-import type { Participant } from "../types";
+"use client";
+
+import { useParticipantStore } from "@/store/participantStore";
 import ParticipantItem from "./ParticipantItem";
 
-interface Props {
-  participants: Participant[];
-  onRemove: (id: string) => void;
-}
+export default function ParticipantList() {
+  const participants = useParticipantStore(
+    (state) => state.participants
+  );
 
-export default function ParticipantList({
-  participants,
-  onRemove,
-}: Props) {
-  if (participants.length === 0) {
-    return (
-      <div className="rounded border border-dashed p-4 text-center text-gray-400">
-        참가자가 없습니다.
-      </div>
-    );
-  }
+  const removeParticipant = useParticipantStore(
+    (state) => state.removeParticipant
+  );
 
   return (
-    <div className="mt-6 max-h-[500px] space-y-2 overflow-y-auto">
-      {participants.map((participant) => (
-        <ParticipantItem
-          key={participant.id}
-          participant={participant}
-          onRemove={onRemove}
-        />
-      ))}
+    <div className="h-full overflow-y-auto pr-2">
+      {participants.length === 0 ? (
+        <div className="text-center text-slate-400">
+          참가자를 추가해주세요.
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {participants.map((participant) => (
+            <ParticipantItem
+              key={participant.id}
+              participant={participant}
+              onRemove={removeParticipant}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

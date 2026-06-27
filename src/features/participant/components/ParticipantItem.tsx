@@ -1,4 +1,6 @@
-import type { Participant } from "../types";
+"use client";
+
+import { Participant } from "@/store/participantStore";
 
 interface Props {
   participant: Participant;
@@ -10,22 +12,14 @@ export default function ParticipantItem({
   onRemove,
 }: Props) {
   return (
-    <div className="flex items-center justify-between rounded border p-2">
+    <div className="flex items-center justify-between rounded-lg border border-slate-200 p-3">
       <span>{participant.name}</span>
 
       <button
-        className="
-          rounded-lg
-          p-2
-          text-red-500
-          transition
-
-          hover:bg-red-50
-          hover:text-red-600
-        "
         onClick={() => onRemove(participant.id)}
+        className="rounded-lg p-2 text-red-500 hover:bg-red-50"
       >
-          ✕
+        ✕
       </button>
     </div>
   );

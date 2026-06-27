@@ -1,16 +1,36 @@
 import { Camera } from "./Camera";
-import { GrassRenderer, TrackRenderer } from "./renderer";
+import { RunnerManager } from "./runner/RunnerManager";
+import {
+  GrassRenderer,
+  RunnerRenderer,
+  TrackRenderer,
+} from "./renderer";
 
 export class CanvasEngine {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
 
+  /**
+   * Animation
+   */
   private animationId = 0;
 
+  /**
+   * Engine
+   */
   private camera = new Camera();
 
-  private grass = new GrassRenderer();
-  private track = new TrackRenderer();
+  /**
+   * Renderer
+   */
+  private grassRenderer = new GrassRenderer();
+  private trackRenderer = new TrackRenderer();
+  private runnerRenderer = new RunnerRenderer();
+
+  /**
+   * Runner
+   */
+  private runnerManager = new RunnerManager();
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -24,14 +44,23 @@ export class CanvasEngine {
     this.ctx = context;
   }
 
+  /**
+   * 게임 시작
+   */
   start() {
     this.loop();
   }
 
+  /**
+   * 게임 종료
+   */
   stop() {
     cancelAnimationFrame(this.animationId);
   }
 
+  /**
+   * 게임 루프
+   */
   private loop = () => {
     this.update();
     this.render();
@@ -39,10 +68,16 @@ export class CanvasEngine {
     this.animationId = requestAnimationFrame(this.loop);
   };
 
+  /**
+   * 업데이트
+   */
   private update() {
     this.camera.update();
   }
 
+  /**
+   * 화면 렌더링
+   */
   private render() {
     this.ctx.clearRect(
       0,
@@ -51,16 +86,30 @@ export class CanvasEngine {
       this.canvas.height
     );
 
-    this.grass.draw(
+    /**
+     * Grass
+     */
+    this.grassRenderer.draw(
       this.ctx,
       this.canvas.width,
       this.canvas.height
     );
 
-    this.track.draw(
+    /**
+     * Track
+     */
+    this.trackRenderer.draw(
       this.ctx,
       this.canvas.width,
       this.canvas.height
+    );
+
+    /**
+     * Runner
+     */
+    this.runnerRenderer.draw(
+      this.ctx,
+      this.runnerManager
     );
   }
 }
