@@ -19,7 +19,7 @@ export default function ParticipantList({
   }
 
   return (
-    <div className="mt-4 flex flex-col gap-2">
+    <div className="mt-6 max-h-[500px] space-y-2 overflow-y-auto">
       {participants.map((participant) => (
         <ParticipantItem
           key={participant.id}
