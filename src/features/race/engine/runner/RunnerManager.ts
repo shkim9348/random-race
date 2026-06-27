@@ -1,31 +1,31 @@
-import { Runner } from "./Runner";
+import { Runner } from "../types/Runner";
+import { createRunner } from "./RunnerFactory";
 
 export class RunnerManager {
-  runners: Runner[] = [];
+  private runners: Runner[] = [];
 
-  constructor() {
-    this.createSampleRunner();
+  /**
+   * 참가자 목록으로 Runner 생성
+   */
+  setParticipants(
+    participants: {
+      id: string;
+      name: string;
+    }[]
+  ) {
+    this.runners = participants.map((participant, index) =>
+      createRunner(
+        participant.id,
+        participant.name,
+        index
+      )
+    );
   }
 
-  private createSampleRunner() {
-    const colors = [
-      "#ff595e",
-      "#1982c4",
-      "#6a4c93",
-      "#8ac926",
-      "#ffca3a",
-    ];
-
-    for (let i = 0; i < 20; i++) {
-      this.runners.push(
-        new Runner(
-          crypto.randomUUID(),
-          `Runner ${i + 1}`,
-          170,
-          330 + i * 22,
-          colors[i % colors.length]
-        )
-      );
-    }
+  /**
+   * Runner 목록 반환
+   */
+  getRunners() {
+    return this.runners;
   }
 }

@@ -1,34 +1,41 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+
 import { CanvasEngine } from "../engine/CanvasEngine";
+import { useParticipantStore } from "@/store/participantStore";
 
 export default function RaceCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const participants = useParticipantStore(
+    (state) => state.participants
+  );
+
+  const engineRef = useRef<CanvasEngine | null>(null);
+
   useEffect(() => {
-    const canvas = canvasRef.current;
+    if (!canvasRef.current) return;
 
-    if (!canvas) return;
-
-    canvas.width = 1920;
-    canvas.height = 1080;
-
-    const engine = new CanvasEngine(canvas);
+    const engine = new CanvasEngine(canvasRef.current);
 
     engine.start();
 
-    return () => {
-      engine.stop();
-    };
+    engineRef.current = engine;
+
+    return () => engine.stop();
   }, []);
 
+  useEffect(() => {
+    engineRef.current?.setParticipants(participants);
+  }, [participants]);
+
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <canvas
-        ref={canvasRef}
-        className="aspect-video w-full"
-      />
-    </div>
+    <canvas
+      ref={canvasRef}
+      width={1400}
+      height={700}
+      className="w-full rounded-xl border bg-green-700"
+    />
   );
 }
